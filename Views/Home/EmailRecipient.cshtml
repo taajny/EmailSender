@@ -1,0 +1,38 @@
+﻿@model  EmailSender.Models.Domains.EmailRecipient
+
+@{
+    
+        ViewBag.Title = ViewBag.Message; 
+}
+
+<div class="row">
+    <div class="offset-lg-3 col-lg-6 offset-lg-3">
+        <h3 class="mb-3">@ViewBag.Message</h3>
+        @using (Html.BeginForm("EmailRecipient", "Home"))
+        {
+
+            if (Model.Id == 0)
+            {
+                <p class="alert alert-info" mb-4 mt-4>
+                    Pola Nazwa odbiorcy oraz adres e-mail są <strong>wymagane</strong>.
+                </p>
+            }
+            <div class="form-group">
+                @Html.LabelFor(x => x.Name)
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", autofocus = "autofocus" })
+            </div>
+
+            @Html.HiddenFor(x => x.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.EmailAddress)
+                @Html.TextBoxFor(x => x.EmailAddress, new { @class = "form-control" })
+            </div>
+
+            <button class="btn btn-primary btn-lg mt-5 mb-5" type="submit">
+                Zapisz
+            </button>
+    }
+    </div>
+</div>
+

@@ -1,0 +1,43 @@
+﻿@model List<EmailSender.Models.Domains.EmailMessage>
+
+<div class="row">
+
+    <h2>Wiadomości wysłane</h2>
+
+    <table class="table table-hover table-striped mt-3 mb-5">
+        <thead>
+            <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Temat</th>
+                <th scope="col">Odbiorca</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emailMessage in Model)
+            {
+                <tr>
+                    <td>
+                        @emailMessage.DateOfSending
+                    </td>
+                    <td>
+                        @emailMessage.Subject
+                    </td>
+                    <td>
+                        @emailMessage.EmailRecipient.Name
+                    </td>
+                    <td>
+                        <button type="submit"
+                                class="btn btn-danger btn-sm"
+                                onclick="deleteEmailMessage('@emailMessage.Id', this)">
+                            Usuń
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+

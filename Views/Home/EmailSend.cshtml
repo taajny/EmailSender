@@ -1,0 +1,63 @@
+﻿@model EmailSender.Models.ViewModels.SendEmailMessageViewModel
+
+@{
+    ViewBag.Title = Model.Heading;
+}
+
+<h1 class="mb-3">@Model.Heading</h1>
+
+<div class="row">
+    <div class="col-lg-6">
+        @using (Html.BeginForm("EmailSend", "Home"))
+        {
+            //if (Model.EmailMessage.Id == 0)
+            //{
+            <p class="alert alert-info mt-4 mb-4">
+                Pole takie jak Odbiorca, Temat, Treść wiadomości są <strong>wymagane</strong>.
+            </p>
+            //}
+
+            @Html.HiddenFor(x => x.EmailMessage.Id);
+            @Html.HiddenFor(x => x.EmailMessage.UserId);
+
+            <div class="form-group mb-3">
+                @Html.LabelFor(x => x.EmailMessage.EmailRecipientId, new { @class = "mb-3" })
+                @Html.DropDownListFor(x => x.EmailMessage.EmailRecipientId,
+                new SelectList(Model.EmailRecipients, "Id", $"Name"),
+                "-- Wybierz Odbiorcę --",
+                new { @class = "form-control mb-3", autofocus = "autofocus" })
+            </div>
+
+            <div class="form-group mb-3">
+                @Html.LabelFor(x => x.EmailMessage.Subject, new { @class = "mb-3" })
+                @Html.TextBoxFor(x => x.EmailMessage.Subject, new { @class = "form-control mb-3" })
+            </div>
+
+            <div class="form-group mb-3">
+                @Html.LabelFor(x => x.EmailMessage.Body, new { @class = "mb-3" })
+                @Html.TextAreaFor(x => x.EmailMessage.Body, new { @class = "form-control mb-3", rows = 10 })
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg mb-5">
+                Wyślij
+            </button>
+        }
+    </div>
+    <div class="col-5 offset-lg-1">
+
+        @Html.Partial("_Outbox", Model.EmailMessages)
+
+
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        function deleteEmailMessage() {
+            alert('usuwanie wiadomości');
+        }
+    </script>   
+}    

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<EmailSender.Models.Domains.EmailRecipient>
+
+@{
+    ViewBag.Title = "Książka adresowa";
+}
+
+<h1 class="mb-3">Książka adresowa</h1>
+
+<button 
+        class="btn btn-primary mb-3" 
+        onclick='window.location.href="@Url.Action("EmailRecipient", "Home")"'>
+            Dodaj Odbiorcę
+</button>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-hover table-striped mt-3 mb-5">
+        <thead>
+            <tr>
+                <th scope="col">Imię i nazwisko / nazwa</th>
+                <th scope="col">Adres email</th>
+                <th scope="col">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach( var emailRecipient in Model)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action("EmailRecipient", "Home", new { id = @emailRecipient.Id })"> 
+                        @emailRecipient.Name
+                    </a>
+                </td>
+                <td>@emailRecipient.EmailAddress</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="deleteEmailRecipient()">Usuń Odbiorcę</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>Brak Odbiorców do wyświetlenia.</div>
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function deleteEmailRecipient() {
+
+            if (!confirm("Czy na pewno chcesz usunąć tego Odbiorcę?"))
+                return;
+        }
+    </script>
+}
