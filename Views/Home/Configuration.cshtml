@@ -1,7 +1,70 @@
-﻿
+﻿@model EmailSender.Models.ViewModels.EmailParamsViewModel
+
 @{
-    ViewBag.Title = "Konfiguracja";
+    ViewBag.Title = "Konfiguracja serwera smtp";
 }
 
-<h2>Konfiguracja</h2>
+<div class="container w-50">
+    <h3 style="text-align: center;">Konfiguracja serwera smtp:</h3>
+    @using (Html.BeginForm("Configuration", "Home"))
+    {
+        
+        <table class="table table-hover table-striped mt-3 mb-5">
+            <thead>
+                <tr>
+                    <th colspan="2" class="text-bg-primary text-lg-center">Ustawienia serwera smtp:</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-bg-primary text-lg-end m-5"><strong>Adres serwera smtp:</strong></td>
+                    <td class="table-info">
+                        @Html.TextBoxFor(x => x.EmailParams.HostSmtp, new { @class = "form-control" })
+                    </td>
 
+                </tr>
+                <tr>
+                    <td class="text-bg-primary text-lg-end m-5"><strong>Port:</strong></td>
+                    <td class="table-info">
+                        @Html.TextBoxFor(x => x.EmailParams.Port, new { @class = "form-control" })
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="text-bg-primary text-lg-end m-5"><strong>Włączone SSL:</strong></td>
+                    <td class="table-info">
+                        @Html.TextBoxFor(x => x.EmailParams.EnableSsl, new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-bg-primary text-lg-end m-5"><strong>Nazwa użytkownika <br />[wyświetlana odbiorcy]:</strong></td>
+                    <td class="table-info">
+                        @Html.TextBoxFor(x => x.EmailParams.SenderName, new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-bg-primary text-lg-end m-5"><strong>Email Nadawcy:</strong></td>
+                    <td class="table-info">
+                        @Html.TextBoxFor(x => x.EmailParams.SenderEmail, new { @class = "form-control" })
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="text-bg-primary text-lg-end m-5"><strong>Hasło:</strong></td>
+                    <td class="table-info">
+                        @Html.TextBoxFor(x => x.EmailParams.SenderEmailPassword, new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-info">&nbsp;</td>
+                    <td class="table-info">
+                        <button type="submit" class="btn btn-primary btn-lg mb-5">
+                            Zapisz
+                        </button>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    }
+</div>

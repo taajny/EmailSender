@@ -28,5 +28,18 @@ namespace EmailSender.Models.Domains.Repositories
                 context.SaveChanges();
             }
         }
+
+        public void Delete(int id, string userId)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var emailMessageToDelete = context.EmailMessages
+                    .Include(x => x.EmailRecipient)
+                    .Single(x => x.Id == id && x.UserId == userId);
+
+                context.EmailMessages.Remove(emailMessageToDelete);
+                context.SaveChanges();
+            }
+        }
     }
 }

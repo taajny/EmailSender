@@ -3,6 +3,7 @@
     padding-bottom: 20px;
 }
 
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -20,10 +21,29 @@
     white-space: normal;
 }
 
-
+.field-validation-error {
+    color: #ff3333;
+    font-weight: 500;
+}
 
 .navbar-inverse .navbar-toggle:hover,
 .navbar-inverse .navbar-toggle:focus {
     background-color: #777;
     border-color: #fff;
+}
+
+.privacyPoliceBtn {
+    font-size: 11px;
+
+}
+
+.privacyPoliceInfo {
+    font-size: 10px;
+    position: fixed;
+    bottom: 0;
+    background-color: #464646;
+    width: 100%;
+    color: lightgray;
+    text-align: center;
+    padding: 5px 0;
 }

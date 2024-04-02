@@ -1,5 +1,12 @@
-﻿@model List<EmailSender.Models.Domains.EmailMessage>
-
+﻿@model EmailSender.Models.ViewModels.SendEmailMessageViewModel
+@{
+    var messagesIds = "";
+    foreach (var msg in Model.EmailMessages)
+    {
+        messagesIds += msg.Id.ToString();
+        messagesIds += ", ";
+    }
+}
 <div class="row">
 
     <h2>Wiadomości wysłane</h2>
@@ -13,16 +20,16 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var emailMessage in Model)
+            @foreach (var emailMessage in Model.EmailMessages)
             {
                 <tr>
-                    <td>
+                    <td onclick="const messagesIds = [@messagesIds]; ShowBodyMessage('@emailMessage.Id', messagesIds)">
                         @emailMessage.DateOfSending
                     </td>
-                    <td>
+                    <td onclick="const messagesIds = [@messagesIds]; ShowBodyMessage('@emailMessage.Id', messagesIds)">
                         @emailMessage.Subject
                     </td>
-                    <td>
+                    <td onclick="const messagesIds = [@messagesIds]; ShowBodyMessage('@emailMessage.Id', messagesIds)">
                         @emailMessage.EmailRecipient.Name
                     </td>
                     <td>

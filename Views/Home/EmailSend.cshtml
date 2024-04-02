@@ -13,10 +13,11 @@
             //if (Model.EmailMessage.Id == 0)
             //{
             <p class="alert alert-info mt-4 mb-4">
-                Pole takie jak Odbiorca, Temat, Treść wiadomości są <strong>wymagane</strong>.
+                Proszę wybrać <strong>Odbiorcę</strong> wiadomości.
             </p>
             //}
 
+            @Html.AntiForgeryToken()
             @Html.HiddenFor(x => x.EmailMessage.Id);
             @Html.HiddenFor(x => x.EmailMessage.UserId);
 
@@ -26,6 +27,7 @@
                 new SelectList(Model.EmailRecipients, "Id", $"Name"),
                 "-- Wybierz Odbiorcę --",
                 new { @class = "form-control mb-3", autofocus = "autofocus" })
+                @Html.ValidationMessageFor(x => x.EmailMessage.EmailRecipientId)
             </div>
 
             <div class="form-group mb-3">
@@ -45,10 +47,18 @@
     </div>
     <div class="col-5 offset-lg-1">
 
-        @Html.Partial("_Outbox", Model.EmailMessages)
+        @Html.Partial("_Outbox", Model)
 
-
-
+        @foreach (var message in Model.EmailMessages)
+        {
+            <div 
+                 id="@message.Id" 
+                 style="display: none;"
+                 class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary lead my-1 blog-post-meta">
+                    @message.Body
+            </div>
+        }
+        
     </div>
 </div>
 
@@ -56,8 +66,43 @@
 {
     <script type="text/javascript">
 
-        function deleteEmailMessage() {
-            alert('usuwanie wiadomości');
+        function ShowBodyMessage(id, emailMessagesIds) {
+            var x;
+            for (var i = 0; i < emailMessagesIds.length; i++) {
+                x = document.getElementById(emailMessagesIds[i]);
+                x.style.display = "none";
+            }
+             
+            x = document.getElementById(id);
+            x.style.display = "block";
+        }
+
+        function deleteEmailMessage(id, btn) {
+
+            if (!confirm("Czy na pewno chcesz usunąć tą wiadomość?"))
+                return;
+
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("DeleteEmailMessage", "Home")",
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.Success) {
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                    }
+                    else
+                    {
+                        alert(data.Message);
+                    }
+                },
+                error: function (data) {
+                    alert(data.Message);
+                },
+                dataType: 'json'
+            });
         }
     </script>   
 }    

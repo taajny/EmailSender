@@ -33,7 +33,11 @@
                 </td>
                 <td>@emailRecipient.EmailAddress</td>
                 <td>
-                    <button class="btn btn-danger btn-sm" onclick="deleteEmailRecipient()">Usuń Odbiorcę</button>
+                    <button 
+                            class="btn btn-danger btn-sm" 
+                            onclick="deleteEmailRecipient('@emailRecipient.Id', this)">
+                                Usuń Odbiorcę
+                    </button>
                 </td>
             </tr>
         }
@@ -48,10 +52,32 @@ else
 @section Scripts
 {
     <script type="text/javascript">
-        function deleteEmailRecipient() {
+        function deleteEmailRecipient(id, btn) {
 
             if (!confirm("Czy na pewno chcesz usunąć tego Odbiorcę?"))
                 return;
+
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("DeleteEmailRecipient", "Home")",
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.Success) {
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                    }
+                    else
+                    {
+                        alert(data.Message);
+                    }
+                },
+                error: function (data) {
+                    alert(data.Message);
+                },
+                dataType: 'json'
+            });
         }
     </script>
 }
