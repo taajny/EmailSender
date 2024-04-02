@@ -7,7 +7,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Services.Description;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace EmailSender.Models.Domains.Repositories
 {
